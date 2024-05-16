@@ -164,4 +164,41 @@ namespace svg
             point = point.scale(origin, factor);
         }
     }
+
+    // Group
+    Group::Group() {}
+    Group::~Group() {
+        for (SVGElement* element : elements) {
+            delete element;
+        }
+    }
+
+    void Group::addElement(SVGElement* element) {
+        elements.push_back(element);
+    }
+
+    void Group::draw(PNGImage &img) const {
+        for (SVGElement* element : elements) {
+            element->draw(img);
+        }
+    }
+
+    void Group::translate(const Point &offset) {
+        for (SVGElement* element : elements) {
+            element->translate(offset);
+        }
+    }
+
+    void Group::rotate(int angle, const Point &origin) {
+        for (SVGElement* element : elements) {
+            element->rotate(angle, origin);
+        }
+    }
+
+    void Group::scale(int factor, const Point &origin) {
+        for (SVGElement* element : elements) {
+            element->scale(factor, origin);
+        }
+
+    }
 }
