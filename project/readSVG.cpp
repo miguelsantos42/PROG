@@ -23,7 +23,7 @@ namespace svg {
         while (ss >> operation) {
             if (operation.find("translate") != string::npos) {
                 int x, y;
-                sscanf(operation.c_str(), "translate(%d,%d)", &x, &y);
+                sscanf(transform.c_str(), "translate(%d %d)", &x, &y);
                 element->translate(create_point(x, y));
             } else if (operation.find("rotate") != string::npos) {
                 int angle;
@@ -112,7 +112,7 @@ namespace svg {
                 int height = child->IntAttribute("height");
                 const char* fillStr = child->Attribute("fill");
                 Color fill = parse_color(fillStr ? fillStr : "");
-                element = new Rect(fill, create_point(x, y), width, height);
+                element = new Rect(fill, create_point(x, y), create_point(x + width-1, y), create_point(x + width-1, y + height-1), create_point(x, y + height-1));
             }
 
             if (element) {

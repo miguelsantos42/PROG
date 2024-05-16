@@ -1,6 +1,7 @@
 #include "SVGElements.hpp"
 #include "Point.hpp"
 #include <cmath>
+#include <iostream>
 
 // Helper function to create Point
 svg::Point create_point(int x, int y) {
@@ -60,29 +61,37 @@ namespace svg
     }
 
     // Rect
-    Rect::Rect(const Color &fill, const Point &corner, int width, int height)
-        : fill(fill), corner(corner), width(width), height(height) {}
+    Rect::Rect(const Color &fill, const Point &corner1, const Point &corner2, const Point &corner3, const Point &corner4) :
+        fill(fill), corner1(corner1), corner2(corner2), corner3(corner3), corner4(corner4)  {}
 
     void Rect::draw(PNGImage &img) const {
-        for (int i = corner.x; i < corner.x + width; i++) {
-            for (int j = corner.y; j < corner.y + height; j++) {
-                img.at(i, j) = fill;
-            }
-        }
+        img.draw_polygon({
+            corner1,
+            corner2,
+            corner3,
+            corner4
+        }, fill);
     }
 
     void Rect::translate(const Point &offset) {
-        corner = corner.translate(offset);
+        corner1 = corner1.translate(offset);
+        corner2 = corner2.translate(offset);
+        corner3 = corner3.translate(offset);
+        corner4 = corner4.translate(offset);
     }
 
     void Rect::rotate(int angle, const Point &origin) {
-        corner = corner.rotate(origin, angle);
+        corner1 = corner1.rotate(origin, angle);
+        corner2 = corner2.rotate(origin, angle);
+        corner3 = corner3.rotate(origin, angle);
+        corner4 = corner4.rotate(origin, angle);
     }
 
     void Rect::scale(int factor, const Point &origin) {
-        corner = corner.scale(origin, factor);
-        width *= factor;
-        height *= factor;
+        corner1 = corner1.scale(origin, factor);
+        corner2 = corner2.scale(origin, factor);
+        corner3 = corner3.scale(origin, factor);
+        corner4 = corner4.scale(origin, factor);
     }
 
     // Line
@@ -141,10 +150,7 @@ namespace svg
         : fill(fill), points(points) {}
 
     void Polygon::draw(PNGImage &img) const {
-        for (size_t i = 0; i < points.size() - 1; i++) {
-            img.draw_line(points[i], points[i + 1], fill);
-        }
-        img.draw_line(points[points.size() - 1], points[0], fill);
+        img.draw_polygon(points, fill);
     }
 
     void Polygon::translate(const Point &offset) {

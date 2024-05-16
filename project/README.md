@@ -5,8 +5,8 @@
 
 Identify all group elements (numbers and names).
 
-- upXXXXX Name of element 1
-- upXXXXX Name of element 2
+- upXXXXX André Pinto Sousa
+- up202008450 Miguel Filipe Rodrigues dos Santos
 - upXXXXX Name of element 3
 
 
