@@ -61,7 +61,7 @@ namespace svg
     class Rect : public SVGElement
     {
     public:
-        Rect(const Color &fill, const Point &corner, int width, int height);
+        Rect(const Color &fill, const Point &corner1, const Point &corner2, const Point &corner3, const Point &corner4);
         void draw(PNGImage &img) const override;
         void translate(const Point &offset) override;
         void rotate(int angle, const Point &origin) override;
@@ -69,9 +69,10 @@ namespace svg
 
     private:
         Color fill;
-        Point corner;
-        int width;
-        int height;
+        Point corner1;
+        Point corner2;
+        Point corner3;
+        Point corner4;
     };
 
     class Line : public SVGElement
